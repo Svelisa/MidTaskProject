@@ -74,7 +74,7 @@
 
 
 
-    <!-- Techniques Section (Accordion) -->
+    <!-- Form section -->
     <section id="form" class="py-4">
       <div class="container">
           <div class="row">
@@ -83,6 +83,24 @@
                 <h2 class="h3 mb-1">שאלון פרטי המתנדב/ת</h2>
               </header>
 
+              
+        <form id="quiz-form" action="#" method="post" aria-describedby="quiz-help"
+          aria-describedby="quiz-help required-note">
+          <p id="required-note" class="small text-danger mt-2">* כל הסעיפים חובה</p>
+          <div class="vstack gap-4">
+
+                                <!-- Q4: text input -->
+            <article class="p-3 border rounded-3 bg-white" dir="rtl" lang="he">
+              <h3 class="h5" id="q4-title">שם מלא:</h3>
+                <span class="text-danger" aria-hidden="true">*</span>
+                <span class="visually-hidden">שדה חובה</span>
+
+              <textarea id="q4input" name="q4" class="form-control" placeholder="שם פרטי + שם משפחה"
+                minlength="0" maxlength="100" required aria-required="true"
+                aria-describedby="q4-hint q4-count q4-error" rows="1"></textarea>
+            </article>
+      </div>
+
             </div>
             <div class="col-md-6">
                 <img src="assets/מתן_עדות.avif" alt="צילום של עדות" style="height: 300px; width: auto;">
@@ -90,228 +108,12 @@
           </div>
 
 
-        <div class="accordion" id="peTechniques">
-          <!-- Item A: Identity definition -->
-          <div class="accordion-item bg-white border">
-            <h3 class="accordion-header" id="tA-h">
-              <button class="accordion-button collapsed justify-content-between text-end" type="button"
-                data-bs-toggle="collapse" data-bs-target="#tA" aria-expanded="false" aria-controls="tA">
-                <span class="fw-semibold">הגדרת זהויות</span>
-              </button>
-            </h3>
-            <div id="tA" class="accordion-collapse collapse" aria-labelledby="tA-h" data-bs-parent="#peTechniques">
-              <div class="accordion-body">
-                <p class="mb-2">
-                  בשיחה עם מודל שפה (LLM), התוצאה מושפעת לא רק ממה שאנחנו שואלים – אלא גם איך אנחנו מגדירים את זהותו של
-                  המודל.
-                  אחת הדרכים לשפר את איכות התשובות היא להגדיר למודל “דמות” או “תפקיד” ברור – למשל, מומחה לשיווק דיגיטלי,
-                  מורה למדעים, יועץ למידה או מנחה סדנאות. ברגע שהמודל מבין את ההקשר התפקידי, הוא מתאים את הסגנון, רמת
-                  הפירוט והטון לתפקיד שבחרנו.
-                </p>
-                <p class="mb-2">
-                  כדי לדייק עוד יותר, אפשר להוסיף גם את קהל היעד – למשל: “הסבר כמו למנהלים בכירים” או “כתוב ברמה בסיסית
-                  לסטודנטים שנה א׳”.
-                </p>
-                <h4 class="h6 mt-3 mb-1">למה זה עובד</h4>
-                <p class="mb-2">
-                  המודל אינו “מבין” באמת תפקידים, אבל הוא נחשף במהלך האימון שלו לאינספור טקסטים מתפקידים שונים – מאמרים
-                  אקדמיים, פוסטים שיווקיים, דוחות, ושיחות מקצועיות.
-                  כאשר מגדירים לו תפקיד, הוא מחקה את סגנון הכתיבה והחשיבה האופייניים לאותו תחום. כך הוא מייצר תגובות
-                  עקביות, ממוקדות ובעלות סגנון מותאם.
-                </p>
-                <h4 class="h6 mt-3 mb-1">דוגמה</h4>
-                <p class="mb-0">
-                  “אתה יועץ למידה בארגון טכנולוגי. הסבר לעובדים חדשים למה חשוב לתעד תובנות מהדרכות, וכתוב את זה בטון
-                  מעודד ומעשי.”
-                </p>
-              </div>
-            </div>
-          </div>
+        
 
-          <!-- Item B: Stepwise reasoning -->
-          <div class="accordion-item bg-white border">
-            <h3 class="accordion-header" id="tB-h">
-              <button class="accordion-button collapsed justify-content-between text-end" type="button"
-                data-bs-toggle="collapse" data-bs-target="#tB" aria-expanded="false" aria-controls="tB">
-                <span class="fw-semibold">פירוק לשלבים</span>
-              </button>
-            </h3>
-            <div id="tB" class="accordion-collapse collapse" aria-labelledby="tB-h" data-bs-parent="#peTechniques">
-              <div class="accordion-body">
-                <p class="mb-2">
-                  אחת הדרכים הפשוטות לשפר את התשובות של מודל שפה היא לגרום לו “לחשוב בקול”. במקום לבקש ממנו תשובה סופית
-                  בלבד,
-                  אפשר להנחות אותו להסביר את הדרך שבה הגיע לתוצאה – שלב אחרי שלב. הטכניקה הזו שימושית במיוחד בשאלות
-                  הדורשות ניתוח,
-                  תכנון או פתרון בעיות, והיא מובילה לתשובות מנומקות ומדויקות יותר.
-                </p>
-                <h4 class="h6 mt-3 mb-1">למה זה עובד</h4>
-                <p class="mb-2">
-                  מודל שפה לא חושב בצורה פנימית כמו אדם – הוא “חושב” רק תוך כדי כתיבה. כאשר הוא מתבקש לפרט את תהליך
-                  החשיבה,
-                  הוא נאלץ לנתח את הנתונים צעד־צעד, ובכך מפחית סיכוי לשגיאות לוגיות או לתשובות כלליות מדי. זה גם מאפשר
-                  ללומד להבין את הדרך ולא רק את הפתרון.
-                </p>
-                <h4 class="h6 mt-3 mb-1">דוגמה</h4>
-                <p class="mb-0">
-                  “חשב כמה זמן ייקח לי להכין מצגת בת 20 שקפים אם אני עובד בקצב של 3 שקפים בשעה. פרט את דרך החשיבה שלך
-                  שלב אחרי שלב, ורק אחר כך תן את התוצאה הסופית.”
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item C: Positive, clear language -->
-          <div class="accordion-item bg-white border">
-            <h3 class="accordion-header" id="tC-h">
-              <button class="accordion-button collapsed justify-content-between text-end" type="button"
-                data-bs-toggle="collapse" data-bs-target="#tC" aria-expanded="false" aria-controls="tC">
-                <span class="fw-semibold">שימוש בשפה חיובית</span>
-              </button>
-            </h3>
-            <div id="tC" class="accordion-collapse collapse" aria-labelledby="tC-h" data-bs-parent="#peTechniques">
-              <div class="accordion-body">
-                <p class="mb-2">
-                  כדי לקבל תשובה טובה ממודל שפה, חשוב לנסח את הבקשה בצורה חיובית, ממוקדת וברורה. ככל שההנחיה ברורה יותר
-                  – כך התוצאה תהיה מדויקת יותר.
-                  במקום “אל תכתוב ארוך מדי”, עדיף לומר “כתוב סיכום תמציתי בפסקה אחת בלבד”. הבהרה מדויקת של הציפיות מראש
-                  תחסוך ניסוחים חוזרים ותניב תוצרים טובים יותר.
-                </p>
-                <h4 class="h6 mt-3 mb-1">למה זה עובד</h4>
-                <p class="mb-2">
-                  מודל השפה פועל על בסיס הסתברויות – הוא משלים טקסטים לפי מילים שהופיעו יחד במיליוני הקשרים.
-                  כאשר כותבים הוראות בשלילה (“אל תעשה...”), המודל עדיין “מתמקד” במילים שבשלילה. לעומת זאת, ניסוח חיובי
-                  (“עשה כך”) ממקד אותו בדיוק במה שצריך להופיע בתשובה.
-                  התוצאה: תשובות ממוקדות, קצרות וברורות.
-                </p>
-                <h4 class="h6 mt-3 mb-1">דוגמה</h4>
-                <p class="mb-0">
-                  “הסבר בקצרה מה זה ‘למידת מכונה’. השתמש בביטויים כמו ‘תוכנה שלומדת מניסיון’ או ‘מערכת שמזהה דפוסים מתוך
-                  מידע’,
-                  וכתוב את ההסבר בשפה פשוטה כאילו אתה מדבר עם תלמיד בן 12.”
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item D: Shape the answer -->
-          <div class="accordion-item bg-white border">
-            <h3 class="accordion-header" id="tD-h">
-              <button class="accordion-button collapsed justify-content-between text-end" type="button"
-                data-bs-toggle="collapse" data-bs-target="#tD" aria-expanded="false" aria-controls="tD">
-                <span class="fw-semibold">עיצוב התשובה מראש</span>
-              </button>
-            </h3>
-            <div id="tD" class="accordion-collapse collapse" aria-labelledby="tD-h" data-bs-parent="#peTechniques">
-              <div class="accordion-body">
-                <p class="mb-2">
-                  אחת הדרכים היעילות לשפר את איכות התגובה ממודל שפה היא להנחות אותו לא רק מה לכתוב – אלא איך להציג את
-                  זה.
-                  כשאנחנו מבקשים תוצאה במבנה מוגדר, למשל טבלה, רשימה, פסקה תמציתית או מדריך בשלבים – אנחנו עוזרים למודל
-                  להפיק תשובה שקל להבין,
-                  להשוות או לשלב במסמך קיים. לעומת זאת, כשלא מציינים מבנה רצוי, המודל מחליט בעצמו והתוצאה עלולה להיות
-                  ארוכה מדי, מבולגנת או לא ממוקדת.
-                </p>
-                <h4 class="h6 mt-3 mb-1">למה זה עובד</h4>
-                <p class="mb-2">
-                  מודלי שפה פועלים טוב יותר כשהם מקבלים הוראות ברורות. ככל שהנחיית הפורמט מפורטת יותר, כך האלגוריתם
-                  “יודע” לארגן את התוכן בהתאם לציפייה שלנו.
-                  במילים אחרות, הגדרה מוקדמת של הצורה חוסכת לנו זמן עריכה ומקלה על הקריאה והשימוש בתוצאה.
-                </p>
-                <h4 class="h6 mt-3 mb-1">דוגמה</h4>
-                <p class="mb-0">
-                  “ציין שלוש דרכים לשפר ריכוז בלמידה. הצג את התשובה בטבלה עם שלושה עמודות: השיטה, מתי כדאי להשתמש בה,
-                  ודוגמה ליישום יומיומי.”
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item E: Supportive context -->
-          <div class="accordion-item bg-white border">
-            <h3 class="accordion-header" id="tE-h">
-              <button class="accordion-button collapsed justify-content-between text-end" type="button"
-                data-bs-toggle="collapse" data-bs-target="#tE" aria-expanded="false" aria-controls="tE">
-                <span class="fw-semibold">שימוש בהקשר תומך</span>
-              </button>
-            </h3>
-            <div id="tE" class="accordion-collapse collapse" aria-labelledby="tE-h" data-bs-parent="#peTechniques">
-              <div class="accordion-body">
-                <p class="mb-2">
-                  כדי לקבל תשובה מדויקת יותר ממודל שפה, חשוב לתת לו כמה שיותר רקע. כשאנחנו מוסיפים קובץ, תקציר, או תיאור
-                  מצב,
-                  המודל יכול להבין את נקודת המוצא וליצור תגובה מותאמת ולא כללית. לדוגמה, אם מצרפים מסמך הנחיות או סיכום
-                  עבודה,
-                  המודל יבנה תשובה שמתבססת על התוכן הקיים ולא על ידע כללי מהאינטרנט.
-                </p>
-                <p class="mb-2">
-                  חשוב לזכור: אין להעלות מידע אישי, רפואי או חסוי לשירותים מקוונים, גם לא לצ’אטים מבוססי AI.
-                </p>
-                <h4 class="h6 mt-3 mb-1">למה זה עובד</h4>
-                <p class="mb-2">
-                  המודל “מבין” הקשרים דרך טקסט, לא דרך ניחוש. כאשר הוא מקבל תוספת של מידע רלוונטי – כמו הנחיות, דוגמאות,
-                  או קובץ מצורף –
-                  הוא משתמש בו כדי לדייק את התוכן ולהתאים את הסגנון. במקום תשובה כללית, מתקבלת תשובה ספציפית ומותאמת
-                  לסיטואציה שלך.
-                </p>
-                <h4 class="h6 mt-3 mb-1">דוגמה</h4>
-                <p class="mb-0">
-                  “אני כותבת מדריך לעובדים בנושא שימוש נכון בבינה מלאכותית בעבודה. מצורפת מצגת מהסדנה האחרונה שלנו.
-                  הפק עבורי תקציר בן פסקה אחת שמסכם את עיקרי ההמלצות שהוצגו במצגת, בשפה נגישה שמתאימה לאתר פנימי של
-                  הארגון.”
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item F: Question-led dialog -->
-          <div class="accordion-item bg-white border">
-            <h3 class="accordion-header" id="tF-h">
-              <button class="accordion-button collapsed justify-content-between text-end" type="button"
-                data-bs-toggle="collapse" data-bs-target="#tF" aria-expanded="false" aria-controls="tF">
-                <span class="fw-semibold">דיאלוג מכוון</span>
-              </button>
-            </h3>
-            <div id="tF" class="accordion-collapse collapse" aria-labelledby="tF-h" data-bs-parent="#peTechniques">
-              <div class="accordion-body">
-                <p class="mb-2">
-                  אחת הדרכים החכמות לדייק את הבקשות שלך היא לא רק לשאול את המודל, אלא גם לאפשר לו לשאול אותך בחזרה.
-                  במקום לנסח פרומפט אחד גדול ולא ממוקד, אפשר לכתוב בקשה כללית ולבקש מהמודל שיציג כמה שאלות הבהרה, אחת
-                  בכל פעם,
-                  עד שיוכל לענות בצורה מדויקת באמת. כך נוצר דיאלוג שמחדד את המטרה ומביא לתוצר מדויק יותר.
-                </p>
-                <h4 class="h6 mt-3 mb-1">למה זה עובד</h4>
-                <p class="mb-2">
-                  כאשר המודל “מראיין” אותנו באמצעות שאלות המשך, הוא בונה לעצמו הבנה טובה יותר של הצורך שלנו.
-                  כל שאלה מאפשרת לו להתאים את ההנחיה הבאה על פי התשובה הקודמת. במקום תשובה כללית, נוצרת אינטראקציה
-                  שמובילה לפתרון מדויק וצמוד לצורך האמיתי.
-                </p>
-                <h4 class="h6 mt-3 mb-1">דוגמה</h4>
-                <p class="mb-0">
-                  “אני מפתח הדרכה שמכין קורס א-סינכרוני לעובדים חדשים בארגון. אני רוצה לבנות תסריט לסרטון פתיחה.
-                  שאל אותי שאלה אחת בכל פעם על מנת לתכנן ולדייק את הסרטון.”
-                </p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
     </section>
 
 
-    <!-- Quiz Section as a FORM -->
-    <section id="quiz" class="py-5">
-      <div class="container">
-        <header class="mb-4">
-          <h2 class="h3 mb-1">שאלות לתרגול</h2>
-          <p id="quiz-help" class="mb-0 small">ענו על השאלות, בסיום לחצו על כפתור הבדיקה</p>
-        </header>
 
-        <form id="quiz-form" action="#" method="post" aria-describedby="quiz-help"
-          aria-describedby="quiz-help required-note">
-          <p id="required-note" class="small text-danger mt-2">* כל הסעיפים חובה</p>
 
           <div class="vstack gap-4">
 
@@ -404,22 +206,7 @@
               </fieldset>
             </article>
 
-            <!-- Q4: text input -->
-            <article class="p-3 border rounded-3 bg-white" dir="rtl" lang="he">
-              <h3 class="h5" id="q4-title">4) טקסט חופשי (ללא בדיקת תקינות תשובה)</h3>
 
-              <label class="form-label" for="q4input">
-                תאר/י בקצרה שימוש של בינה מלאכותית יצרנית שעשית בעבר ואיך היית משלבת בו לפחות 2 מהטכניקות שנלמדו:
-                <span class="text-danger" aria-hidden="true">*</span>
-                <span class="visually-hidden">שדה חובה</span>
-              </label>
-              <textarea id="q4input" name="q4" class="form-control" placeholder="הקלד/י תשובה (מקסימום 1000 תווים)"
-                minlength="30" maxlength="1000" required aria-required="true"
-                aria-describedby="q4-hint q4-count q4-error" rows="6"></textarea>
-              <div id="q4-hint" class="form-text">
-                יש להזין לפחות 30 תווים ולא יותר מ־1000 תווים.
-              </div>
-            </article>
 
 
             <!-- Form actions -->
@@ -523,5 +310,6 @@
     </div>
   </div>
 </body>
+
 
 </html>
