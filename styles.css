@@ -319,37 +319,40 @@ section {
 /* --- כאן מתחיל החלק החדש לרספונסיביות --- */
 
 @media (max-width: 991px) {
-    /* עיצוב התפריט הנפתח במובייל */
-    .navbar-collapse {
-        background-color: #ffffff;
-        padding: 1rem;
-        border-radius: 0 0 15px 15px;
-        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        text-align: right;
-    }
-
-    /* צמצום ה-Hero (באנר החיפוש) */
+    
+    /* 1. דקוק משמעותי של הבאנר */
     .hero-section {
-        min-height: 140px !important;
-        padding: 1.5rem 0 !important;
-        background-position: center top; 
+        min-height: 100px !important; /* הקטנה מ-140 ל-100 */
+        padding: 0.8rem 0 !important; /* צמצום המרווח למעלה ולמטה */
+        background-position: center;
     }
 
-    /* הקטנת הכותרת בבאנר */
+    /* 2. הקטנת הכותרת וצמצום הרווח בינה לבין החיפוש */
     .hero-section h1 {
-        font-size: 1.6rem !important;
-        margin-bottom: 1rem !important;
+        font-size: 1.3rem !important; /* כותרת קטנה יותר */
+        margin-bottom: 0.4rem !important; /* צמצום הרווח מתחת לכותרת */
         font-weight: 700;
     }
 
-    /* התאמת תיבת החיפוש */
+    /* 3. דקוק של תיבת החיפוש עצמה */
     .search-container {
-        height: 45px !important;
-        max-width: 90% !important;
+        height: 40px !important; /* הקטנה מ-45 ל-40 */
+        max-width: 85% !important; /* תיבה מעט יותר צרה */
+    }
+
+    .search-container input::placeholder {
+        font-size: 0.85rem;
+    }
+
+    /* 4. בונוס: הקטנת הלוגו ב-Header כדי שכל החלק העליון יהיה עדין יותר */
+    header .navbar-brand img {
+        height: 40px !important; /* הקטנת הלוגו מ-50 ל-40 */
     }
 
     /* יישור הטופס לימין במובייל */
     #quiz-form article {
         text-align: right !important;
+        padding: 1.2rem !important;
     }
 }
+
