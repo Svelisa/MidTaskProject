@@ -316,3 +316,40 @@ section {
     transition: background-color .2s ease, color .2s ease;
   }
 }
+/* --- כאן מתחיל החלק החדש לרספונסיביות --- */
+
+@media (max-width: 991px) {
+    /* עיצוב התפריט הנפתח במובייל */
+    .navbar-collapse {
+        background-color: #ffffff;
+        padding: 1rem;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        text-align: right;
+    }
+
+    /* צמצום ה-Hero (באנר החיפוש) */
+    .hero-section {
+        min-height: 140px !important;
+        padding: 1.5rem 0 !important;
+        background-position: center top; 
+    }
+
+    /* הקטנת הכותרת בבאנר */
+    .hero-section h1 {
+        font-size: 1.6rem !important;
+        margin-bottom: 1rem !important;
+        font-weight: 700;
+    }
+
+    /* התאמת תיבת החיפוש */
+    .search-container {
+        height: 45px !important;
+        max-width: 90% !important;
+    }
+
+    /* יישור הטופס לימין במובייל */
+    #quiz-form article {
+        text-align: right !important;
+    }
+}
