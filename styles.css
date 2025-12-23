@@ -46,6 +46,12 @@ h4,
   font-weight: var(--font-weight-semibold);
 }
 
+.text-turquoise {
+    /* שימוש במשתנה שהגדרת */
+    color: var(--clr-main-hover);
+}
+
+
 .hero-section {
   /* נתיב לתמונה שלך */
   background-image: url('assets/HeroBG.png');
@@ -239,4 +245,5 @@ section {
   }
 
 }
+
 
