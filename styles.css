@@ -68,6 +68,15 @@ html {
   scroll-behavior: smooth;
 }
 
+.svg-icon {
+    width: 100%;
+    max-width: 70px; /* גודל מקסימלי לאייקון */
+    height: 70px;    /* גובה קבוע ליצירת אחידות */
+    object-fit: contain;
+    padding: 5px;
+    transition: transform 0.3s ease;
+}
+
 
 /* Alternate section backgrounds to improve visual rhythm */
 section:nth-of-type(even) {
@@ -230,3 +239,4 @@ section {
   }
 
 }
+
