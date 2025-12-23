@@ -68,19 +68,68 @@ h4,
   display: flex;
   align-items: center;
 
+
 }
 
-html {
-  scroll-behavior: smooth;
+/*navbar settings*/
+/* עיצוב קישורי הניווט במצב רגיל */
+.nav-link.text-on-brand {
+    position: relative;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
 }
 
-.svg-icon {
-    width: 100%;
-    max-width: 70px; /* גודל מקסימלי לאייקון */
-    height: 70px;    /* גובה קבוע ליצירת אחידות */
-    object-fit: contain;
-    padding: 5px;
-    transition: transform 0.3s ease;
+/* אפקט ריחוף לקישורי הטקסט בתפריט */
+.nav-link.text-on-brand:hover {
+    color: var(--clr-main-hover) !important; /* שינוי לטורקיז */
+    background-color: rgba(255, 255, 255, 0.1); /* הוספת רקע לבן שקוף עדין */
+    border-radius: 8px;
+    outline: none; /* מבטל את ה-outline הדיפולטיבי שהגדרת לקישורים כלליים */
+}
+
+/* אפקט ספציפי לכפתור "לשאלון התנדבות" (הכפתור הלבן) */
+.nav-item .btn-light {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.nav-item .btn-light:hover {
+    background-color: var(--clr-main-hover) !important;
+    color: var(--clr-main) !important; /* טקסט כהה על רקע טורקיז */
+    border-color: var(--clr-white);
+    transform: translateY(-2px); /* קפיצה קטנה למעלה */
+}
+
+
+/*search settings*/
+
+#searchBtn:hover {
+    background-color: #f8f9fa; /* רקע מעט כהה יותר בריחוף */
+    border-color: var(--clr-main-hover); /* שימוש במשתנה שלך למסגרת */
+}
+
+.search-container {
+    max-width: 600px; /* ניתן לשנות לפי הצורך */
+    margin: 0 auto;
+    height: 55px; /* גובה דומה לזה שבתמונה */
+    border: 1px solid #dee2e6;
+}
+
+/* ביטול המסגרת הכחולה של בוטסטראפ בלחיצה */
+#searchInput:focus {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+/* התאמת צבע הפלייסהולדר */
+#searchInput::placeholder {
+    color: #000033; /* צבע כחול כהה כמו בתמונה */
+    opacity: 0.8;
+}
+
+.search-icon-inside {
+    margin-left: 10px;
+    opacity: 0.7;
 }
 
 
@@ -175,17 +224,40 @@ a:focus {
   border-bottom: none;
 }
 
-/* =========================================
-   Specific
-   ========================================= */
-
-
-
-@media (max-width: 767.98px) {
-  #intro img {
-    max-height: 220px;
-  }
+html {
+  scroll-behavior: smooth;
 }
+
+/* הגדרת בסיס לכרטיס */
+.card-hover {
+    transition: all 0.3s ease-in-out; /* אנימציה חלקה לכל השינויים */
+    cursor: pointer;
+    border: 1px solid transparent; /* הכנה למסגרת שתופיע בריחוף */
+}
+
+/* אפקט ריחוף על הכרטיס */
+.card-hover:hover {
+    transform: translateY(-5px); /* הרמה קלה של הכרטיס */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important; /* הצללה בולטת */
+    border-color: var(--clr-main-hover) !important; /* צביעת המסגרת בטורקיז */
+}
+
+/* הגדלת האייקון רק בזמן ריחוף על הכרטיס */
+.card-hover:hover .svg-icon {
+    transform: scale(1.15); /* הגדלה של 15% לאייקון */
+}
+
+/* מוודא שהאייקון עצמו תומך באנימציה */
+.svg-icon {
+
+        width: 100%;
+    max-width: 70px; /* גודל מקסימלי לאייקון */
+    height: 70px;    /* גובה קבוע ליצירת אחידות */
+    object-fit: contain;
+    padding: 5px;
+        transition: transform 0.3s ease-in-out;
+}
+
 
 
 /* =========================================
@@ -243,7 +315,4 @@ section {
   .nav-link {
     transition: background-color .2s ease, color .2s ease;
   }
-
 }
-
-
