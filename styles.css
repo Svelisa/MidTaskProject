@@ -11,7 +11,6 @@
   --clr-bg-2: #ecf0f7;
   --clr-white: #ffffff;
 
-
   --font-family-base: "Assistant", sans-serif;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
@@ -32,62 +31,37 @@ body {
 }
 
 /* Headings */
-h1,
-.h1 {
-  font-weight: var(--font-weight-semibold);
-}
-
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4 {
-  font-weight: var(--font-weight-semibold);
-}
+h1, .h1 { font-weight: var(--font-weight-semibold); }
+h2, .h2, h3, .h3, h4, .h4 { font-weight: var(--font-weight-semibold); }
 
 .text-turquoise {
-    /* שימוש במשתנה שהגדרת */
     color: var(--clr-main-hover);
 }
 
-
 .hero-section {
-  /* נתיב לתמונה שלך */
   background-image: url('assets/HeroBG.png');
-  
-  /* הגדרות רקע כדי שימלא את כל השטח */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  
-  /* גובה מינימלי לסקשן כדי שהתמונה תיראה טוב */
   min-height: 300px;
-  
-  /* מרכוז התוכן אנכית */
   display: flex;
   align-items: center;
-
-
 }
 
 /*navbar settings*/
-/* עיצוב קישורי הניווט במצב רגיל */
 .nav-link.text-on-brand {
     position: relative;
     transition: color 0.3s ease;
     padding: 0.5rem 1rem;
 }
 
-/* אפקט ריחוף לקישורי הטקסט בתפריט */
 .nav-link.text-on-brand:hover {
-    color: var(--clr-main-hover) !important; /* שינוי לטורקיז */
-    background-color: rgba(255, 255, 255, 0.1); /* הוספת רקע לבן שקוף עדין */
+    color: var(--clr-main-hover) !important;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    outline: none; /* מבטל את ה-outline הדיפולטיבי שהגדרת לקישורים כלליים */
+    outline: none;
 }
 
-/* אפקט ספציפי לכפתור "לשאלון התנדבות" (הכפתור הלבן) */
 .nav-item .btn-light {
     transition: all 0.3s ease;
     border: 2px solid transparent;
@@ -95,35 +69,31 @@ h4,
 
 .nav-item .btn-light:hover {
     background-color: var(--clr-main-hover) !important;
-    color: var(--clr-main) !important; /* טקסט כהה על רקע טורקיז */
+    color: var(--clr-main) !important;
     border-color: var(--clr-white);
-    transform: translateY(-2px); /* קפיצה קטנה למעלה */
+    transform: translateY(-2px);
 }
 
-
 /*search settings*/
-
 #searchBtn:hover {
-    background-color: #f8f9fa; /* רקע מעט כהה יותר בריחוף */
-    border-color: var(--clr-main-hover); /* שימוש במשתנה שלך למסגרת */
+    background-color: #f8f9fa;
+    border-color: var(--clr-main-hover);
 }
 
 .search-container {
-    max-width: 600px; /* ניתן לשנות לפי הצורך */
+    max-width: 600px;
     margin: 0 auto;
-    height: 55px; /* גובה דומה לזה שבתמונה */
+    height: 55px;
     border: 1px solid #dee2e6;
 }
 
-/* ביטול המסגרת הכחולה של בוטסטראפ בלחיצה */
 #searchInput:focus {
     box-shadow: none;
     background-color: transparent;
 }
 
-/* התאמת צבע הפלייסהולדר */
 #searchInput::placeholder {
-    color: #000033; /* צבע כחול כהה כמו בתמונה */
+    color: #000033;
     opacity: 0.8;
 }
 
@@ -132,32 +102,26 @@ h4,
     opacity: 0.7;
 }
 
-
-/* Alternate section backgrounds to improve visual rhythm */
 section:nth-of-type(even) {
   background: var(--clr-bg-2);
 }
 
-/* Primary brand utilities mapped onto Bootstrap semantics */
 .bg-brand {
   background-color: var(--clr-main) !important;
   color: var(--clr-white) !important;
-  /* text on main = white */
 }
 
 .text-on-brand {
   color: var(--clr-white) !important;
 }
 
-/* Links and focus states with accessible outlines */
 a {
   color: var(--clr-main);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-a:hover,
-a:focus {
+a:hover, a:focus {
   color: var(--clr-text);
   background: var(--clr-main-hover);
   outline: 2px solid var(--clr-main);
@@ -165,15 +129,13 @@ a:focus {
   text-decoration: none;
 }
 
-/* Button theming (keep Bootstrap structure; adjust minimal tokens) */
 .btn-brand {
   background-color: var(--clr-main);
   color: var(--clr-white);
   border: 1px solid var(--clr-main);
 }
 
-.btn-brand:hover,
-.btn-brand:focus-visible {
+.btn-brand:hover, .btn-brand:focus-visible {
   background-color: var(--clr-main-hover);
   color: var(--clr-text);
   border-color: var(--clr-main);
@@ -185,8 +147,7 @@ a:focus {
   border: 1px solid var(--clr-main);
 }
 
-.btn-outline-brand:hover,
-.btn-outline-brand:focus-visible {
+.btn-outline-brand:hover, .btn-outline-brand:focus-visible {
   background-color: var(--clr-main-hover);
   color: var(--clr-text);
   border-color: var(--clr-main);
@@ -198,102 +159,56 @@ a:focus {
   color: var(--clr-text) !important;
   cursor: not-allowed !important;
   opacity: 1 !important;
-  /* keep contrast */
 }
 
-/* Status badges (static, no JS logic) */
-.badge-correct {
-  background-color: var(--clr-correct);
-  color: var(--clr-text);
-}
+.badge-correct { background-color: var(--clr-correct); color: var(--clr-text); }
+.badge-incorrect { background-color: var(--clr-incorrect); color: var(--clr-text); }
+.badge-neutral { background-color: var(--clr-disabled); color: var(--clr-text); }
 
-.badge-incorrect {
-  background-color: var(--clr-incorrect);
-  color: var(--clr-text);
-}
+.tech-card .card-header { background-color: transparent; border-bottom: none; }
 
-.badge-neutral {
-  background-color: var(--clr-disabled);
-  color: var(--clr-text);
-}
+html { scroll-behavior: smooth; }
 
-
-/* Card minimal refinements—use Bootstrap spacing */
-.tech-card .card-header {
-  background-color: transparent;
-  border-bottom: none;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-/* הגדרת בסיס לכרטיס */
 .card-hover {
-    transition: all 0.3s ease-in-out; /* אנימציה חלקה לכל השינויים */
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
-    border: 1px solid transparent; /* הכנה למסגרת שתופיע בריחוף */
+    border: 1px solid transparent;
 }
 
-/* אפקט ריחוף על הכרטיס */
 .card-hover:hover {
-    transform: translateY(-5px); /* הרמה קלה של הכרטיס */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important; /* הצללה בולטת */
-    border-color: var(--clr-main-hover) !important; /* צביעת המסגרת בטורקיז */
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+    border-color: var(--clr-main-hover) !important;
 }
 
-/* הגדלת האייקון רק בזמן ריחוף על הכרטיס */
-.card-hover:hover .svg-icon {
-    transform: scale(1.15); /* הגדלה של 15% לאייקון */
-}
+.card-hover:hover .svg-icon { transform: scale(1.15); }
 
-/* מוודא שהאייקון עצמו תומך באנימציה */
 .svg-icon {
-
-        width: 100%;
-    max-width: 70px; /* גודל מקסימלי לאייקון */
-    height: 70px;    /* גובה קבוע ליצירת אחידות */
+    width: 100%;
+    max-width: 70px;
+    height: 70px;
     object-fit: contain;
     padding: 5px;
-        transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
 }
-
-
 
 /* =========================================
    Quiz validation & feedback visuals
    ========================================= */
+#quiz-form article.is-correct { border-color: var(--clr-correct) !important; }
+#quiz-form article.is-incorrect { border-color: var(--clr-incorrect) !important; }
+#quiz-form .q-feedback { margin-top: .75rem; }
+#quiz-form .q-feedback .alert { border-right: 4px solid rgba(0,0,0,.08); }
 
-/* Color the question card border based on result */
-#quiz article.is-correct { border-color: var(--clr-correct) !important; }
-#quiz article.is-incorrect { border-color: var(--clr-incorrect) !important; }
-
-/* Space for feedback block */
-#quiz .q-feedback { margin-top: .75rem; }
-
-/* Optional: subtle left border for feedback readability */
-#quiz .q-feedback .alert { border-right: 4px solid rgba(0,0,0,.08); }
-
-
-/* =========================================
-   Anchor scroll offset for sticky header
-   ========================================= */
-
-section {
-  scroll-margin-top: 6rem; 
-}
+section { scroll-margin-top: 6rem; }
 
 @media (max-width: 767.98px) {
-  section {
-    scroll-margin-top: 5rem;
-  }
+  section { scroll-margin-top: 5rem; }
 }
 
 /* =========================================
-   Acssibility
+   Accessibility
    ========================================= */
-
-   /* Skip-link accessibility */
 .skip-link {
   position: absolute;
   top: -1000px;
@@ -310,49 +225,50 @@ section {
   outline: 3px solid var(--clr-main-hover);
 }
 
-/* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: no-preference) {
   .nav-link {
     transition: background-color .2s ease, color .2s ease;
   }
 }
-/* --- כאן מתחיל החלק החדש לרספונסיביות --- */
+
+/* --- כאן מתחיל החלק של הרספונסיביות והתפריט השחור --- */
 
 @media (max-width: 991px) {
     
-    /* 1. דקוק משמעותי של הבאנר */
+    /* הטמעת החלק שביקשת: תפריט נפתח בצבע כהה */
+    .navbar-collapse {
+        background-color: var(--clr-main); /* רקע כהה לתפריט הנפתח */
+        padding: 1rem;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+        text-align: right;
+    }
+
+    /* דקוק הבאנר במובייל */
     .hero-section {
-        min-height: 100px !important; /* הקטנה מ-140 ל-100 */
-        padding: 0.8rem 0 !important; /* צמצום המרווח למעלה ולמטה */
-        background-position: center;
+        padding-top: 1.2rem !important;
+        padding-bottom: 1.2rem !important;
+        min-height: auto !important;
     }
 
-    /* 2. הקטנת הכותרת וצמצום הרווח בינה לבין החיפוש */
     .hero-section h1 {
-        font-size: 1.3rem !important; /* כותרת קטנה יותר */
-        margin-bottom: 0.4rem !important; /* צמצום הרווח מתחת לכותרת */
-        font-weight: 700;
+        font-size: 1.4rem !important;
+        margin-bottom: 0.5rem !important;
     }
 
-    /* 3. דקוק של תיבת החיפוש עצמה */
     .search-container {
-        height: 40px !important; /* הקטנה מ-45 ל-40 */
-        max-width: 85% !important; /* תיבה מעט יותר צרה */
+        height: 42px !important;
+        max-width: 95% !important;
     }
 
-    .search-container input::placeholder {
-        font-size: 0.85rem;
-    }
-
-    /* 4. בונוס: הקטנת הלוגו ב-Header כדי שכל החלק העליון יהיה עדין יותר */
+    /* הקטנת הלוגו במובייל כדי שלא יתפוס מקום */
     header .navbar-brand img {
-        height: 40px !important; /* הקטנת הלוגו מ-50 ל-40 */
+        height: 35px !important;
     }
 
     /* יישור הטופס לימין במובייל */
     #quiz-form article {
         text-align: right !important;
-        padding: 1.2rem !important;
+        padding: 1.25rem !important;
     }
 }
-
