@@ -24,30 +24,33 @@
 
 
   <!-- Header / Masthead -->
-  <header class="sticky-top bg-brand py-3">
-    <div class="container">
-      <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
+ <header class="sticky-top bg-white border-bottom py-2">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light p-0">
+      <div class="container-fluid p-0 d-flex justify-content-between align-items-center">
+        
+        <button class="navbar-toggler border-0 shadow-none ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="תפריט">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <a href="/" class="d-block">
-          <img src="assets/Edut_logo.svg" alt="לוגו עדות 710" class="rounded-3" style="height: 75px; width: auto;">
+        <a class="navbar-brand m-0" href="#">
+          <img src="assets/Edut_logo.svg" alt="לוגו עדות 710" style="height: 50px; width: auto;">
         </a>
-        <!-- In-page navigation; uses semantic nav and aria-label -->
-        <nav aria-label="ניווט ראשי">
-          <ul class="nav nav-pills gap-2">
-            <li class="nav-item"><a class="nav-link text-on-brand" href="#form">שאלון פרטי המתנדב/ת</a></li>
-            <li class="nav-item"><a class="nav-link text-on-brand" href="#contentUnits">יחידות תוכן</a></li>
-            <li class="nav-item"><a class="nav-link text-on-brand" href="#search">חיפוש</a></li>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav ms-auto gap-2 mt-3 mt-lg-0">
+            <li class="nav-item"><a class="nav-link text-dark" href="#form">שאלון פרטי המתנדב/ת</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="#contentUnits">יחידות תוכן</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="#search">חיפוש</a></li>
             <li class="nav-item">
-              <a class="nav-link text-on-brand" href="https://www.edut710.org/" target="_blank"
-                rel="noopener noreferrer">
-                לאתר הארגון
-              </a>
+              <a class="nav-link btn btn-outline-brand text-dark px-3" href="https://www.edut710.org/" target="_blank" rel="noopener noreferrer">לאתר הארגון</a>
             </li>
           </ul>
-        </nav>
+        </div>
       </div>
-    </div>
-  </header>
+    </nav>
+  </div>
+</header>
 
   <!-- Main -->
   <main id="main-content">
