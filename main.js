@@ -1,25 +1,147 @@
+/* =========================================
+   SCORM & Form Logic - גרסה תואמת חומר נלמד
+   ========================================= */
 
+// אובייקט SCORM של pipwerks
+var scorm = pipwerks.SCORM;
+var lmsConnected = false;
 
 document.addEventListener("DOMContentLoaded", function () {
-  var form = document.getElementById("quiz-form");
 
+  // 1) אתחול חיבור ל-LMS
+  lmsConnected = scorm.init();
+  if (lmsConnected) {
+    console.log("SCORM: Connected to LMS.");
+  } else {
+    console.log("SCORM: LMS not found, working locally.");
+  }
+
+  // 2) הגדרת אלמנטים
+  var form = document.getElementById("quiz-form");
   var fullName = document.getElementById("fullName");
   var nameError = document.getElementById("nameError");
-
   var q2 = document.getElementById("q2select");
   var q3 = document.getElementById("q3select");
-
   var submitBtn = document.getElementById("submitBtn");
+  var ethicalCheck = document.getElementById("checkDefault");
+
+// =======================
+// מנגנון חיפוש + הסתרת FORM
+// =======================
+var searchInput = document.getElementById("searchInput");
+var searchBtn = document.getElementById("searchBtn");
+
+var formSection = document.getElementById("form");
+var contentSection = document.getElementById("contentUnits");
+var cards = contentSection.getElementsByClassName("card");
+
+function applySearch() {
+  var q = searchInput.value.trim().toLowerCase();
+
+  // 1) להסתיר/להראות את סקשן הטופס לפי האם יש חיפוש
+  if (q !== "") {
+    formSection.classList.add("d-none");      // מסתיר את הטופס
+    contentSection.classList.remove("d-none"); // מוודא שתוצאות מוצגות
+  } else {
+    formSection.classList.remove("d-none");   // מחזיר את הטופס
+  }
+
+  // 2) סינון כרטיסים
+  for (var i = 0; i < cards.length; i++) {
+    var card = cards[i];
+
+    var titleEl = card.getElementsByClassName("card-title")[0];
+    var titleText = titleEl ? titleEl.textContent.toLowerCase() : "";
+
+    var textEl = card.getElementsByClassName("card-text")[0];
+    var descText = textEl ? textEl.textContent.toLowerCase() : "";
+
+    var match = (q === "") || (titleText.indexOf(q) !== -1) || (descText.indexOf(q) !== -1);
+
+    var wrapper = card.closest('[class*="col-"]');
+
+    if (wrapper) {
+      if (match) wrapper.classList.remove("d-none");
+      else wrapper.classList.add("d-none");
+    }
+  }
+
+  // 3) אם יש חיפוש – קופצים לתוצאות כדי שיופיעו מיד אחרי
+  if (q !== "") {
+    contentSection.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+searchInput.addEventListener("input", function () {
+  applySearch();
+});
+
+searchBtn.addEventListener("click", function () {
+  applySearch();
+});
+
+searchInput.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    applySearch();
+  }
+});
+
+
+
+  // -----------------------
+  // SCORM suspend_data helpers
+  // -----------------------
+  function getSuspendObject() {
+    if (!lmsConnected) return {};
+
+    var raw = scorm.get("cmi.suspend_data");
+    if (!raw) return {};
+
+    try {
+      return JSON.parse(raw);
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveSuspendObject(obj) {
+    if (!lmsConnected) return;
+
+    scorm.set("cmi.suspend_data", JSON.stringify(obj));
+    scorm.save();
+  }
+
+  // -----------------------
+  // פונקציות אימות (Validation)
+  // -----------------------
+
+  function isAllowedNameChar(ch) {
+    var code = ch.charCodeAt(0);
+
+    // רווח / מקף / גרש
+    if (ch === " " || ch === "-" || ch === "'") return true;
+
+    // English A-Z
+    if (code >= 65 && code <= 90) return true;
+
+    // English a-z
+    if (code >= 97 && code <= 122) return true;
+
+    // Hebrew (טווח בסיסי)
+    if (code >= 0x0590 && code <= 0x05FF) return true;
+
+    return false;
+  }
 
   function isNameValid() {
-    var value = fullName.value;
-
-    // if you want "no spaces only letters" you can change this rule.
-    // This regex part wasn't explicitly in the slides, but it's a built-in JS feature.
-    var nameRegex = /^[A-Za-z\u0590-\u05FF\s'-]+$/;
-
+    var value = fullName.value.trim();
     if (value.length < 2) return false;
-    return nameRegex.test(value);
+
+    for (var i = 0; i < value.length; i++) {
+      if (!isAllowedNameChar(value.charAt(i))) return false;
+    }
+    return true;
   }
 
   function isRadioChecked() {
@@ -30,6 +152,18 @@ document.addEventListener("DOMContentLoaded", function () {
     return false;
   }
 
+  function checkFormValidity() {
+    var nameOk = isNameValid();
+    var q2Ok = (q2.value !== "");
+    var q3Ok = (q3.value !== "");
+    var radioOk = isRadioChecked();
+
+    return nameOk && q2Ok && q3Ok && radioOk;
+  }
+
+  // -----------------------
+  // UI: שגיאה/הצלחה לשם
+  // -----------------------
   function updateNameUI() {
     var ok = isNameValid();
 
@@ -38,8 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
       fullName.classList.remove("is-invalid");
       fullName.classList.add("is-valid");
     } else {
-      // show error only after user started typing something
-      if (fullName.value !== "") {
+      if (fullName.value.trim() !== "") {
         nameError.classList.remove("d-none");
         fullName.classList.add("is-invalid");
         fullName.classList.remove("is-valid");
@@ -52,19 +185,77 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function updateSubmitState() {
-    var nameOk = isNameValid();
-    var q2Ok = q2.value !== "";
-    var q3Ok = q3.value !== "";
-    var radioOk = isRadioChecked();
-
-    var ready = nameOk && q2Ok && q3Ok && radioOk;
-
+    var ready = checkFormValidity();
     submitBtn.disabled = !ready;
 
     if (ready) submitBtn.classList.remove("btn-disabled");
     else submitBtn.classList.add("btn-disabled");
   }
 
+  // -----------------------
+  // תהליך נפרד: שמירת checkbox ל-LMS
+  // -----------------------
+  function saveEthicsToLMS() {
+    if (!lmsConnected) return;
+
+    var data = getSuspendObject();
+
+    data.ethics = {
+      approved: ethicalCheck.checked,
+      time: new Date().toLocaleString()
+    };
+
+    saveSuspendObject(data);
+    console.log("Ethics saved:", data.ethics);
+  }
+
+  function restoreEthicsFromLMS() {
+    if (!lmsConnected) return;
+
+    var data = getSuspendObject();
+    if (data.ethics && typeof data.ethics.approved === "boolean") {
+      ethicalCheck.checked = data.ethics.approved;
+    }
+  }
+
+  // -----------------------
+  // שמירת טופס ל-LMS (submit)
+  // -----------------------
+  function getCheckedOccupationValue() {
+    var radios = document.getElementsByName("q1");
+    for (var i = 0; i < radios.length; i++) {
+      if (radios[i].checked) return radios[i].value;
+    }
+    return "";
+  }
+
+  function saveToLMS() {
+    if (!lmsConnected) return;
+
+    // כדי לא לדרוס ethics, נבנה על אובייקט קיים
+    var data = getSuspendObject();
+
+    data.form = {
+      participant_name: fullName.value.trim(),
+      occupation: getCheckedOccupationValue(),
+      experience: q2.value,
+      availability: q3.value,
+      submission_time: new Date().toLocaleString()
+    };
+
+    // שמירה ב-suspend_data
+    saveSuspendObject(data);
+
+    // סטטוס "completed" רק של הטופס
+    scorm.set("cmi.core.lesson_status", "completed");
+    scorm.save();
+
+    console.log("Form saved:", data.form);
+  }
+
+  // -----------------------
+  // אירועים (Events)
+  // -----------------------
   fullName.addEventListener("input", function () {
     updateNameUI();
     updateSubmitState();
@@ -78,7 +269,6 @@ document.addEventListener("DOMContentLoaded", function () {
     updateSubmitState();
   });
 
-  // if user changes radio (even though first is checked by default)
   var radios = document.getElementsByName("q1");
   for (var i = 0; i < radios.length; i++) {
     radios[i].addEventListener("change", function () {
@@ -86,309 +276,61 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  form.addEventListener("submit", function (e) {
-    if (!isNameValid() || q2.value === "" || q3.value === "" || !isRadioChecked()) {
-      e.preventDefault();
-      updateNameUI();
-      updateSubmitState();
-    }
+  ethicalCheck.addEventListener("change", function () {
+    saveEthicsToLMS(); // תהליך נפרד
   });
 
-  // initial
+  // -----------------------
+// Bootstrap Modal handling
+// -----------------------
+var modalElement = document.getElementById("modal-submit");
+var submitModal = new bootstrap.Modal(modalElement);
+
+var stateLoading = document.getElementById("state-loading");
+var stateSuccess = document.getElementById("state-success");
+
+function showLoadingState() {
+  stateLoading.classList.remove("d-none");
+  stateSuccess.classList.add("d-none");
+  submitModal.show();
+}
+
+function showSuccessState() {
+  stateLoading.classList.add("d-none");
+  stateSuccess.classList.remove("d-none");
+}
+
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  if (!checkFormValidity()) {
+    updateNameUI();
+    updateSubmitState();
+    return;
+  }
+
+  // 1) פתיחת מודאל + מצב טעינה
+  showLoadingState();
+
+  // 2) סימולציה של שליחה (כמו LMS אמיתי)
+  setTimeout(function () {
+    saveToLMS();
+
+    // 3) מעבר למצב הצלחה
+    showSuccessState();
+  }, 1200);
+});
+
+  // מצב התחלתי
+  restoreEthicsFromLMS();
   updateNameUI();
   updateSubmitState();
 });
 
-
-
-
-
-/* =========================================
-   SCORM Handeling
-   ========================================= */
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* =========================================
- Quiz validation, grading, feedback
-  ========================================= */
-let form;
-//Batch saves all the interactions for sanding and grading
-let interactionsBatch = [];
-
-document.addEventListener('DOMContentLoaded', () => {
-    form = document.getElementById('quiz-form');
-    if (!form) return;
-
-    form.addEventListener('submit', handleQuizSubmit);
-    form.addEventListener('reset', handleQuizReset);
-    // Enable  the check button after changes
-    form.addEventListener('input', () => setCheckDisabled(false));
-    form.addEventListener('change', () => setCheckDisabled(false));
-
-
-    // Attach the finalize button
-    const btnFinalize = document.getElementById('btn-finalize');
-    if (btnFinalize) {
-        btnFinalize.addEventListener('click', (e) => {
-            finalizeAndCloseLMSConnection();
-        });
-    }
-});
-
-
-function handleQuizSubmit(e) {
-    e.preventDefault();
-    // First: make sure everything required is answered
-    if (!allRequiredAnswered()) return;
-    // Disable the check button after successful check
-    setCheckDisabled(true);
-    // Then chackQuiz, show feedback & collect interactions
-    const interactions = chackQuiz();
-    console.log(interactions);
-    //  send to LMS
-    
-    
-    // Scroll always to the first question with small offset 
-    const firstQuestion = form.querySelector('article');
-    if (firstQuestion) {
-        const y = firstQuestion.getBoundingClientRect().top + window.pageYOffset - 120;
-        window.scrollTo({top: y, behavior: 'smooth'});
-    }
-    // Enable the final submission button
-    setFinalizeDisabled(false);
-}
-
-
-// chackQuiz per question
-function chackQuiz() {
-    // Answer key
-    const ANSWERS = {
-        q1: 'c',                            // חד-ברירה
-        q2: 1,                        // מספר מומלץ
-        // q3 — דעה אישית, אין נכון/שגוי
-        // q4 - מענה פתוח ללא ציון ממוחשב
-    };
-
-    clearAllFeedback();
-
-    //Batch saves all the interactions for sanding (restart)
-    interactionsBatch = [];
-
-    // Q1: radios name="q1"
-    (function () {
-        const article = document.getElementById('q1-title')?.closest('article');
-        if (!article) return;
-
-        const val = form.querySelector('input[name="q1"]:checked')?.value || '';
-        const ok = val === ANSWERS.q1;
-        const msgOk = 'נכון מאוד! הגדרת תפקיד יוצרת הקשר ברור ומשפרת את איכות התגובה.';
-        const msgErr = 'כדאי לזכור שהגדרת תפקיד עוזרת למודל להבין מה הסגנון והטון הרצוי בתשובה.';
-        setFeedback(article, ok, ok ? msgOk : msgErr);
-
-        const selectedText = getChosenRadioText(article, 'q1');
-        interactionsBatch.push({
-            id: 'Q1_define_role',
-            type: 'choice',
-            student_response: selectedText,
-            result: ok ? 'correct' : 'wrong',
-            correct_responses: ['c']
-        });
-    })();
-
-
-    // Q2: numeric
-    (function () {
-        const article = document.getElementById('q2-title')?.closest('article');
-        if (!article) return;
-
-        const raw = form.q2?.value || '';
-        const num = parseInt(raw, 10);
-        const ok = Number.isFinite(num) && num === ANSWERS.q2;
-        const msgOk = 'נכון! מומלץ לבקש מהמודל לשאול שאלה אחת בכל פעם – כך נוכל לענות עליה, והמענה שלנו ישפיע על השאלה הבאה.';
-        const msgErr = 'כדאי לזכור – כשמבקשים מהמודל לשאול כמה שאלות בבת אחת, אנחנו עשויים לקבל שאלות לא רלוונטיות או לפספס דיוקים חשובים.';
-        setFeedback(article, ok, ok ? msgOk : msgErr);
-
-        interactionsBatch.push({
-            id: 'Q5_numeric_dialog',
-            type: 'numeric',
-            student_response: String(raw),
-            result: ok ? 'correct' : 'wrong',
-            correct_responses: ['1']
-        });
-    })();
-
-    // Q3: opinion — always accepted (neutral result)
-    (function () {
-        const article = document.getElementById('q3-title')?.closest('article');
-        if (!article) return;
-
-        const chosen = form.querySelector('input[name="q3"]:checked');
-        const ok = !!chosen;
-        const msgOk = 'מצוין! כל טכניקה יכולה לשפר את איכות השיח עם ה־AI – תלוי בצרכים שלך ובאופי המשימה.';
-        setFeedback(article, ok, msgOk, null, true);
-
-        const selectedText = getChosenRadioText(article, 'q3');
-        interactionsBatch.push({
-            id: 'Q6_preferred_technique',
-            type: 'choice',
-            student_response: selectedText,
-            result: 'neutral',
-            correct_responses: ['אין תשובה נכונה לשאלה זו']
-        });
-    })();
-
-    // Q4: open text — neutral (no grading)
-    (function () {
-        const article = document.getElementById('q4-title')?.closest('article');
-        if (!article) return;
-
-        const raw = (form.q4?.value || '').trim();
-        const len = raw.length;
-        const MIN = 30, MAX = 2000;
-
-        const ok = len >= MIN && len <= MAX;
-        let msgOk = 'תודה! קיבלנו את התשובה.';
-        setFeedback(article, ok, msgOk, null, true);
-
-        const safeResponse = raw.slice(0, MAX);
-        interactionsBatch.push({
-            id: 'Q4_open_text',
-            type: 'fill-in',
-            student_response: safeResponse,
-            result: 'neutral',
-            correct_responses: ['אין תשובה נכונה לשאלה זו']
-        });
-    })();
-
-
-    return interactionsBatch;
-}
-
-
-function handleQuizReset(e) {
-    const f = e.currentTarget;
-    // Allow native reset to clear fields first, then remove feedback
-    setTimeout(() => clearAllFeedback(f), 0);
-    // disable the final submission button
-    setFinalizeDisabled(false);
-}
-
-
-/* =========================================
-   Helpers
-   ========================================= */
-
-// Create/clear feedback block inside a question <article>
-function setFeedback(article, isCorrect, message, details, noPrefix = false) {
-    // wipe previous state
-    article.classList.remove('is-correct', 'is-incorrect');
-    const prev = article.querySelector('.q-feedback');
-    if (prev) prev.remove();
-
-    // add feedback container
-    const wrap = document.createElement('div');
-    wrap.className = 'q-feedback';
-    wrap.setAttribute('role', 'status');
-    wrap.setAttribute('aria-live', 'polite');
-
-    const alert = document.createElement('div');
-    alert.className = 'alert ' + (isCorrect ? 'alert-success' : 'alert-danger') + ' mb-0';
-    const TEXT_OK = 'מעולה — תשובה נכונה.';
-    const TEXT_ERR = 'לא מדויק — ראו הסבר:';
-
-    // choose message format
-    const prefix = noPrefix ? '' : `<strong>${isCorrect ? TEXT_OK : TEXT_ERR}</strong> `;
-    alert.innerHTML = `${prefix}${message || ''}${details ? `<div class="mt-1 small text-muted">${details}</div>` : ''}`;
-
-    wrap.appendChild(alert);
-    article.appendChild(wrap);
-
-    // color the card border
-    article.classList.add(isCorrect ? 'is-correct' : 'is-incorrect');
-}
-
-
-// Clear all feedback (used on reset or before re-check)
-function clearAllFeedback() {
-    form.querySelectorAll('article').forEach(a => {
-        a.classList.remove('is-correct', 'is-incorrect');
-        const fb = a.querySelector('.q-feedback');
-        if (fb) fb.remove();
-    });
-}
-
-// Validate required fields; if invalid, let browser show built-in bubbles
-function allRequiredAnswered() {
-    if (form.checkValidity()) return true;
-    // Focus first invalid
-    const firstInvalid = form.querySelector(':invalid');
-    if (firstInvalid) firstInvalid.focus({preventScroll: false});
-    form.reportValidity();
-    return false;
-}
-
-// Returns the visible label text for a chosen radio in a given <article>
-function getChosenRadioText(articleEl, name) {
-    const input = articleEl.querySelector(`input[name="${name}"]:checked`);
-    if (!input) return '';
-    const label = articleEl.querySelector(`label[for="${input.id}"]`);
-    return label ? label.textContent.trim() : '';
-}
-
-
-// Enable/disable the final submission button
-function setFinalizeDisabled(isDisabled) {
-    const btn = document.getElementById('btn-finalize');
-    if (!btn) return;
-    if (isDisabled) {
-        btn.disabled = true;
-        btn.setAttribute('aria-disabled', 'true');
-    } else {
-        btn.disabled = false;
-        btn.removeAttribute('aria-disabled');
-    }
-}
-
-
-// Function to calculate the final grade while ignoring ungraded questions
-function calculateFinalScore(interactions) {
-    // Compute score 0..100 from the latest graded batch (ignore neutral items like Q6)    
-    if (!Array.isArray(interactions) || !interactions.length) return 0;
-    // Count only items that were graded as correct/wrong (exclude neutral)
-    const graded = interactions.filter(it => it && (it.result === 'correct' || it.result === 'wrong'));
-    const total = graded.length;
-    const correct = graded.reduce((acc, it) => acc + (it.result === 'correct' ? 1 : 0), 0);
-    const score = total > 0 ? Math.round((correct / total) * 100) : 0;
-    return score;
-}
-
-
-function setCheckDisabled(isDisabled) {
-    const btn = document.getElementById('btn-check');
-    if (!btn) return;
-    btn.disabled = !!isDisabled;
-    if (isDisabled) btn.setAttribute('aria-disabled', 'true');
-    else btn.removeAttribute('aria-disabled');
-}
-
-
-// Modal helpers 
-function showModal(id) {
-    if (!window.bootstrap) return;
-    const el = document.getElementById(id);
-    if (!el) return;
-    const inst = bootstrap.Modal.getOrCreateInstance(el);
-    inst.show();
-}
-
+// ניתוק בטוח מה-LMS בסגירת חלון
+window.onunload = function () {
+  if (lmsConnected) {
+    scorm.quit();
+  }
+};
