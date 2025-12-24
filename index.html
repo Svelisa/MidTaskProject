@@ -24,36 +24,37 @@
 
 
   <!-- Header / Masthead -->
-<header class="sticky-top bg-brand py-2 shadow-sm">
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark p-0">
-      <div class="container-fluid p-0 d-flex justify-content-between align-items-center">
-        
-        <a class="navbar-brand m-0" href="#">
-          <img src="assets/Small_Logo_New.png" 
-               alt="סמל עדות 710" 
-               style="height: 45px; width: auto; filter: brightness(0) invert(1);">
+  <header class="sticky-top bg-brand py-2 shadow-sm">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark p-0">
+        <div class="container-fluid p-0 d-flex justify-content-between align-items-center">
+
+          <a class="navbar-brand m-0" href="#">
+            <img src="assets/Small_Logo_New.png" alt="סמל עדות 710"
+              style="height: 45px; width: auto; filter: brightness(0) invert(1);">
           </a>
 
-        <button class="navbar-toggler border-0 shadow-none pe-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="תפריט">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+          <button class="navbar-toggler border-0 shadow-none pe-0" type="button" data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="תפריט">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <div class="collapse navbar-collapse" id="mainNavbar">
-          <ul class="navbar-nav ms-auto gap-2 mt-3 mt-lg-0 text-end">
-            <li class="nav-item"><a class="nav-link text-white" href="#form">שאלון פרטי המתנדב/ת</a></li>
-            <li class="nav-item"><a class="nav-link text-white" href="#contentUnits">יחידות תוכן</a></li>
-            <li class="nav-item"><a class="nav-link text-white" href="#search">חיפוש</a></li>
-            <li class="nav-item">
-              <a class="nav-link btn btn-outline-light text-white px-3 mt-2 mt-lg-0" href="https://www.edut710.org/" target="_blank" rel="noopener noreferrer">לאתר הארגון</a>
-            </li>
-          </ul>
+          <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto gap-2 mt-3 mt-lg-0 text-end">
+              <li class="nav-item"><a class="nav-link text-white" href="#form">שאלון פרטי המתנדב/ת</a></li>
+              <li class="nav-item"><a class="nav-link text-white" href="#contentUnits">יחידות תוכן</a></li>
+              <li class="nav-item"><a class="nav-link text-white" href="#search">חיפוש</a></li>
+              <li class="nav-item">
+                <a class="nav-link btn btn-outline-light text-white px-3 mt-2 mt-lg-0" href="https://www.edut710.org/"
+                  target="_blank" rel="noopener noreferrer">לאתר הארגון</a>
+              </li>
+            </ul>
+          </div>
+
         </div>
-
-      </div>
-    </nav>
-  </div>
-</header>
+      </nav>
+    </div>
+  </header>
 
   <!-- Main -->
   <main id="main-content">
@@ -83,41 +84,37 @@
       </div>
     </section>
 
-    <!-- Form section -->
-    <section id="form" class="py-4">
+    <section id="form" class="py-5">
       <div class="container">
-        <div class="row align-items-start">
-          <!-- Form Column -->
+        <div class="row align-items-center">
+
           <div class="col-md-6">
             <header class="mb-4">
               <h2 class="h3 mb-1">שאלון פרטי המתנדב/ת</h2>
             </header>
 
-            <form id="quiz-form" action="#" method="post" aria-describedby="required-note">
+            <form id="quiz-form" novalidate>
               <p id="required-note" class="small text-danger mt-2">* כל הסעיפים חובה</p>
 
               <div class="vstack gap-4">
-                <!-- Full name input -->
-                <article class="p-3 border rounded-3 bg-white" dir="rtl" lang="he">
-                  <label class="form-label" for="q4input">שם מלא:
+                <article class="p-3 border rounded-3 bg-white">
+                  <label class="form-label" for="fullName">שם מלא:
                     <span class="text-danger" aria-hidden="true">*</span>
-                    <span class="visually-hidden">שדה חובה</span>
                   </label>
-
-                  <input type="text" id="q4input" name="q4" class="form-control" placeholder="שם פרטי + שם משפחה"
-                    minlength="2" maxlength="100" required aria-required="true">
+                  <input type="text" id="fullName" name="q4" class="form-control" placeholder="שם פרטי + שם משפחה"
+                    minlength="2" maxlength="100" required>
+                  <div id="nameError" class="text-danger small mt-1 d-none">יש להזין אותיות בלבד.</div>
                 </article>
 
-                <!-- Field of work - Multiple choice (radios) -->
                 <article class="p-3 border rounded-3 bg-white">
                   <p class="mb-2">תחום עיסוק
                     <span class="text-danger" aria-hidden="true">*</span>
-                    <span class="visually-hidden">שדה חובה</span>
                   </p>
-                  <fieldset aria-labelledby="q1-title">
+                  <fieldset>
                     <legend class="visually-hidden">בחירת אפשרות</legend>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="q1" id="q1a" value="מתעד/ת שטח" required>
+                      <input class="form-check-input" type="radio" name="q1" id="q1a" value="מתעד/ת שטח" checked
+                        required>
                       <label class="form-check-label" for="q1a">מתעד/ת שטח</label>
                     </div>
                     <div class="form-check">
@@ -126,23 +123,20 @@
                     </div>
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="q1" id="q1c" value="עורך/ת וידאו">
-                      <label class="form-check-label" for="q1c">עורך/ת וידאו</label>
+                      <label class="form-check-label" for="q1b">עורך/ת וידאו</label>
                     </div>
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="q1" id="q1d" value="לוגיסטיקה">
-                      <label class="form-check-label" for="q1d">לוגיסטיקה</label>
+                      <label class="form-check-label" for="q1b">לוגיסטיקה</label>
                     </div>
                   </fieldset>
                 </article>
 
-                <!-- Experience in the field -->
                 <article class="p-3 border rounded-3 bg-white" dir="rtl" lang="he">
                   <label class="form-label" for="q2select">ניסיון קודם בתחום ההתנדבות הנבחר:
                     <span class="text-danger" aria-hidden="true">*</span>
-                    <span class="visually-hidden">שדה חובה</span>
                   </label>
-
-                  <select id="q2select" name="q2" class="form-select" required aria-required="true">
+                  <select id="q2select" name="q2" class="form-select" required>
                     <option value="" selected disabled>בחרו אפשרות</option>
                     <option value="ללא ניסיון">ללא ניסיון</option>
                     <option value="בסיסי - עד שנה">בסיסי - עד שנה</option>
@@ -152,33 +146,29 @@
                   </select>
                 </article>
 
-                <!-- Availability -->
                 <article class="p-3 border rounded-3 bg-white" dir="rtl" lang="he">
                   <label class="form-label" for="q3select">זמינות שבועית למשימות:
                     <span class="text-danger" aria-hidden="true">*</span>
-                    <span class="visually-hidden">שדה חובה</span>
                   </label>
-
-                  <select id="q3select" name="q3" class="form-select" required aria-required="true">
+                  <select id="q3select" name="q3" class="form-select" required>
                     <option value="" selected disabled>בחרו אפשרות</option>
-                    <option value="עד 5 שעות שבועיות">עד 5 שעות שבועיות</option>
+                    <option value="עד 5 שעות">עד 5 שעות</option>
                     <option value="5-10 שעות שבועיות">5-10 שעות שבועיות</option>
-                    <option value="10 שעות שבועיות ומעלה">10 שעות שבועיות ומעלה</option>
-                    <option value="זמינות משתנה">זמינות משתנה</option>
+                    <option value="10-20 שעות שבועיות">10-20 שעות שבועיות</option>
+                    <option value="זמינות גמישה/לפי צורך">זמינות גמישה/לפי צורך</option>
                   </select>
                 </article>
               </div>
 
-              <div class="d-flex flex-column gap-3 align-items-center mt-4">
-                <button id="btn-finalize" type="submit" class="btn btn-brand btn-lg px-5">
+
+              <div class="mt-4">
+                <button id="submitBtn" type="submit" class="btn btn-brand btn-lg px-5 btn-disabled" disabled>
                   שליחת הטופס
                 </button>
               </div>
             </form>
           </div>
-
-          <!-- Image Column -->
-          <div class="col-md-6 text-center mt-4">
+          <div class="col-md-6 text-center mt-4 mt-md-0">
             <img src="assets/מתן_עדות.avif" alt="צילום של עדות" class="img-fluid rounded-4 shadow-sm"
               style="max-height: 500px; width: auto; object-fit: cover;">
           </div>
@@ -387,6 +377,3 @@
 </body>
 
 </html>
-
-
-
