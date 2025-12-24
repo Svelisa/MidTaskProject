@@ -39,6 +39,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
+          <!--navbar links  --> 
           <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto gap-2 mt-3 mt-lg-0 text-end">
               <li class="nav-item"><a class="nav-link text-white" href="#form">שאלון פרטי המתנדב/ת</a></li>
@@ -50,7 +51,6 @@
               </li>
             </ul>
           </div>
-
         </div>
       </nav>
     </div>
@@ -90,6 +90,7 @@
       <div class="container">
         <div class="row align-items-center">
 
+          <!-- FORM title -->
           <div class="col-md-6">
             <header class="mb-4">
               <h2 class="h3 mb-1">שאלון פרטי המתנדב/ת</h2>
@@ -98,6 +99,7 @@
             <form id="quiz-form" novalidate>
               <p id="required-note" class="small text-danger mt-2">* כל הסעיפים חובה</p>
 
+              <!-- full  name field -->
               <div class="vstack gap-4">
                 <article class="p-3 border rounded-3 bg-white">
                   <label class="form-label" for="fullName">שם מלא:
@@ -108,6 +110,7 @@
                   <div id="nameError" class="text-danger small mt-1 d-none">יש להזין אותיות בלבד.</div>
                 </article>
 
+                <!-- field of work - radio buttons -->
                 <article class="p-3 border rounded-3 bg-white">
                   <p class="mb-2">תחום עיסוק
                     <span class="text-danger" aria-hidden="true">*</span>
@@ -134,6 +137,7 @@
                   </fieldset>
                 </article>
 
+                <!-- experience - drop-down list -->
                 <article class="p-3 border rounded-3 bg-white" dir="rtl" lang="he">
                   <label class="form-label" for="q2select">ניסיון קודם בתחום ההתנדבות הנבחר:
                     <span class="text-danger" aria-hidden="true">*</span>
@@ -148,6 +152,7 @@
                   </select>
                 </article>
 
+                <!-- availability - drop-down list -->
                 <article class="p-3 border rounded-3 bg-white" dir="rtl" lang="he">
                   <label class="form-label" for="q3select">זמינות שבועית למשימות:
                     <span class="text-danger" aria-hidden="true">*</span>
@@ -161,7 +166,8 @@
                   </select>
                 </article>
 
-                  <article class="p-3 border rounded-3 bg-white" dir="rtl" lang="he">
+                <!-- form approval - checkbox -->  
+                <article class="p-3 border rounded-3 bg-white" dir="rtl" lang="he">
             <p class="mb-2">אישור שליחת מידע
                     <span class="text-danger" aria-hidden="true">*</span>
                   </p>
@@ -199,130 +205,209 @@
           <h2 class="h3 mb-1">יחידות תוכן</h2>
         </header>
 
+              <!-- no results -->
+      <div id="noResultsMsg" class="alert alert-warning mt-3 d-none" role="status" aria-live="polite">
+        לא קיים תוכן מבוקש
+      </div>
+    </header>
+
         <div class="row g-4">
 
           <!-- Card A -->
-          <div class="col-md-6">
-            <div class="card h-100 shadow-sm border-0 card-hover">
-              <div class="row g-0 align-items-center">
-                <div class="col-4 text-center p-3">
-                  <img src="assets/hand_15695513.svg" class="svg-icon" alt="יסודות המיזם">
-                </div>
-                <div class="col-8">
-                  <div class="card-body">
-                    <h5 class="card-title fw-bold">יסודות המיזם והתנדבות</h5>
-                    <p class="card-text">מבוא למיזם "עדות 710", ערכים, קוד אתי והנחיות בסיסיות.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          
+<div class="col-md-6">
+  <a href="unit1.html"
+     class="card h-100 shadow-sm border-0 card-hover text-decoration-none text-reset d-block"
+     aria-label="יסודות המיזם והתנדבות">
 
-          <!-- Card B -->
-          <div class="col-md-6">
-            <div class="card h-100 shadow-sm border-0 card-hover">
-              <div class="row g-0 align-items-center">
-                <div class="col-4 text-center p-3">
-                  <img src="assets/speaker_15695341.svg" class="svg-icon" alt="הכשרת מתעד עדויות בשטח">
-                </div>
-                <div class="col-8">
-                  <div class="card-body">
-                    <h5 class="card-title fw-bold">הכשרת מתעד עדויות בשטח</h5>
-                    <p class="card-text">הנחיות מקצועיות לאיסוף עדויות: שיטות תיעוד, פרוטוקולי שטח, וציוד נדרש.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="row g-0 align-items-center">
+      <div class="col-4 text-center p-3">
+        <img src="assets/hand_15695513.svg" class="svg-icon" alt="יסודות המיזם">
+      </div>
 
-          <!-- Card C -->
-          <div class="col-md-6">
-            <div class="card h-100 shadow-sm border-0 card-hover">
-              <div class="row g-0 align-items-center">
-                <div class="col-4 text-center p-3">
-                  <img src="assets/admission-form_15693428.svg" class="svg-icon" alt="עקרונות תמלול ועריכת טקסט">
-                </div>
-                <div class="col-8">
-                  <div class="card-body">
-                    <h5 class="card-title fw-bold">עקרונות תמלול ועריכת טקסט</h5>
-                    <p class="card-text">נהלים להמרת עדויות קוליות/וידאו לטקסט: כללי תמלול, כלים טכנולוגיים ובקרת איכות.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="col-8">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">יסודות המיזם והתנדבות</h5>
+          <p class="card-text">
+            מבוא למיזם "עדות 710", ערכים, קוד אתי והנחיות בסיסיות.
+          </p>
+        </div>
+      </div>
+    </div>
 
-          <!-- Card D -->
-          <div class="col-md-6">
-            <div class="card h-100 shadow-sm border-0 card-hover">
-              <div class="row g-0 align-items-center">
-                <div class="col-4 text-center p-3">
-                  <img src="assets/play_15695311.svg" class="svg-icon" alt="תהליכי עריכה והפקת וידאו">
-                </div>
-                <div class="col-8">
-                  <div class="card-body">
-                    <h5 class="card-title fw-bold">תהליכי עריכה והפקת וידאו</h5>
-                    <p class="card-text">נהלי עריכת מדיה: שמירת מקור, סטנדרטים גרפיים, כלי עריכה ופורמטים.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card E -->
-          <div class="col-md-6">
-            <div class="card h-100 shadow-sm border-0 card-hover">
-              <div class="row g-0 align-items-center">
-                <div class="col-4 text-center p-3">
-                  <img src="assets/cloud_15687837.svg" class="svg-icon" alt="ניהול נתונים ואבטחת מידע">
-                </div>
-                <div class="col-8">
-                  <div class="card-body">
-                    <h5 class="card-title fw-bold">ניהול נתונים ואבטחת מידע</h5>
-                    <p class="card-text">נהלי ארכוב, שמירת נתונים, סיווג קבצים, שימוש במערכות המידע וגיבוי.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card F -->
-          <div class="col-md-6">
-            <div class="card h-100 shadow-sm border-0 card-hover">
-              <div class="row g-0 align-items-center">
-                <div class="col-4 text-center p-3">
-                  <img src="assets/technology_15694533.svg" class="svg-icon" alt="ידע תפעולי למנהלים">
-                </div>
-                <div class="col-8">
-                  <div class="card-body">
-                    <h5 class="card-title fw-bold">הנחיות למנהלי תחומי אחריות</h5>
-                    <p class="card-text">ידע תפעולי למנהלים: כלי הקצאת משימות, נהלי חניכה ומעקב התקדמות.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  </a>
+</div>
 
 
-          <div class="col-12 col-md-6 mx-auto">
-            <div class="card h-100 shadow-sm border-0 card-hover bg-white">
-              <div class="row g-0 align-items-center">
-                <div class="col-4 text-center p-3">
-                  <img src="assets/sync_15704636.svg" class="svg-icon" alt="עדכוני ידע">
-                </div>
-                <div class="col-8">
-                  <div class="card-body">
-                    <h5 class="card-title fw-bold">עדכוני ידע ושינויים</h5>
-                    <p class="card-text">מאגר עדכונים שוטפים, שאלות נפוצות וטפסים רלוונטיים.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+<!-- Card B -->
+<div class="col-md-6">
+  <a href="unit2.html"
+     class="card h-100 shadow-sm border-0 card-hover text-decoration-none text-reset d-block"
+     aria-label="הכשרת מתעד עדויות בשטח">
 
-        </div> <!-- /.row g-4 -->
-      </div>   <!-- /.container -->
+    <div class="row g-0 align-items-center">
+      <div class="col-4 text-center p-3">
+        <img src="assets/speaker_15695341.svg"
+             class="svg-icon"
+             alt="הכשרת מתעד עדויות בשטח">
+      </div>
+
+      <div class="col-8">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">הכשרת מתעד עדויות בשטח</h5>
+          <p class="card-text">
+            הנחיות מקצועיות לאיסוף עדויות: שיטות תיעוד, פרוטוקולי שטח, וציוד נדרש.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+<!-- Card C -->
+<div class="col-md-6">
+  <a href="unit3.html"
+     class="card h-100 shadow-sm border-0 card-hover text-decoration-none text-reset d-block"
+     aria-label="עקרונות תמלול ועריכת טקסט">
+
+    <div class="row g-0 align-items-center">
+      <div class="col-4 text-center p-3">
+        <img src="assets/admission-form_15693428.svg"
+             class="svg-icon"
+             alt="עקרונות תמלול ועריכת טקסט">
+      </div>
+
+      <div class="col-8">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">עקרונות תמלול ועריכת טקסט</h5>
+          <p class="card-text">
+            נהלים להמרת עדויות קוליות/וידאו לטקסט:
+            כללי תמלול, כלים טכנולוגיים ובקרת איכות.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+<!-- Card D -->
+<div class="col-md-6">
+  <a href="unit4.html"
+     class="card h-100 shadow-sm border-0 card-hover text-decoration-none text-reset d-block"
+     aria-label="תהליכי עריכה והפקת וידאו">
+
+    <div class="row g-0 align-items-center">
+      <div class="col-4 text-center p-3">
+        <img src="assets/play_15695311.svg"
+             class="svg-icon"
+             alt="תהליכי עריכה והפקת וידאו">
+      </div>
+
+      <div class="col-8">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">תהליכי עריכה והפקת וידאו</h5>
+          <p class="card-text">
+            נהלי עריכת מדיה: שמירת מקור, סטנדרטים גרפיים,
+            כלי עריכה ופורמטים.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+<!-- Card E -->
+<div class="col-md-6">
+  <a href="unit5.html"
+     class="card h-100 shadow-sm border-0 card-hover text-decoration-none text-reset d-block"
+     aria-label="ניהול נתונים ואבטחת מידע">
+
+    <div class="row g-0 align-items-center">
+      <div class="col-4 text-center p-3">
+        <img src="assets/cloud_15687837.svg"
+             class="svg-icon"
+             alt="ניהול נתונים ואבטחת מידע">
+      </div>
+
+      <div class="col-8">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">ניהול נתונים ואבטחת מידע</h5>
+          <p class="card-text">
+            נהלי ארכוב, שמירת נתונים, סיווג קבצים,
+            שימוש במערכות המידע וגיבוי.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+<!-- Card F -->
+<div class="col-md-6">
+  <a href="unit6.html"
+     class="card h-100 shadow-sm border-0 card-hover text-decoration-none text-reset d-block"
+     aria-label="הנחיות למנהלי תחומי אחריות">
+
+    <div class="row g-0 align-items-center">
+      <div class="col-4 text-center p-3">
+        <img src="assets/technology_15694533.svg"
+             class="svg-icon"
+             alt="ידע תפעולי למנהלים">
+      </div>
+
+      <div class="col-8">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">הנחיות למנהלי תחומי אחריות</h5>
+          <p class="card-text">
+            ידע תפעולי למנהלים: כלי הקצאת משימות,
+            נהלי חניכה ומעקב התקדמות.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+<!-- Card G (centered) -->
+<div class="col-12 col-md-6 mx-auto">
+  <a href="unit7.html"
+     class="card h-100 shadow-sm border-0 card-hover bg-white
+            text-decoration-none text-reset d-block"
+     aria-label="עדכוני ידע ושינויים">
+
+    <div class="row g-0 align-items-center">
+      <div class="col-4 text-center p-3">
+        <img src="assets/sync_15704636.svg"
+             class="svg-icon"
+             alt="עדכוני ידע">
+      </div>
+
+      <div class="col-8">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">עדכוני ידע ושינויים</h5>
+          <p class="card-text">
+            מאגר עדכונים שוטפים, שאלות נפוצות וטפסים רלוונטיים.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+        </div> 
+      </div>   
     </section>
 
   </main>
