@@ -1,13 +1,111 @@
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  var form = document.getElementById("quiz-form");
+
+  var fullName = document.getElementById("fullName");
+  var nameError = document.getElementById("nameError");
+
+  var q2 = document.getElementById("q2select");
+  var q3 = document.getElementById("q3select");
+
+  var submitBtn = document.getElementById("submitBtn");
+
+  function isNameValid() {
+    var value = fullName.value;
+
+    // if you want "no spaces only letters" you can change this rule.
+    // This regex part wasn't explicitly in the slides, but it's a built-in JS feature.
+    var nameRegex = /^[A-Za-z\u0590-\u05FF\s'-]+$/;
+
+    if (value.length < 2) return false;
+    return nameRegex.test(value);
+  }
+
+  function isRadioChecked() {
+    var radios = document.getElementsByName("q1");
+    for (var i = 0; i < radios.length; i++) {
+      if (radios[i].checked) return true;
+    }
+    return false;
+  }
+
+  function updateNameUI() {
+    var ok = isNameValid();
+
+    if (ok) {
+      nameError.classList.add("d-none");
+      fullName.classList.remove("is-invalid");
+      fullName.classList.add("is-valid");
+    } else {
+      // show error only after user started typing something
+      if (fullName.value !== "") {
+        nameError.classList.remove("d-none");
+        fullName.classList.add("is-invalid");
+        fullName.classList.remove("is-valid");
+      } else {
+        nameError.classList.add("d-none");
+        fullName.classList.remove("is-invalid");
+        fullName.classList.remove("is-valid");
+      }
+    }
+  }
+
+  function updateSubmitState() {
+    var nameOk = isNameValid();
+    var q2Ok = q2.value !== "";
+    var q3Ok = q3.value !== "";
+    var radioOk = isRadioChecked();
+
+    var ready = nameOk && q2Ok && q3Ok && radioOk;
+
+    submitBtn.disabled = !ready;
+
+    if (ready) submitBtn.classList.remove("btn-disabled");
+    else submitBtn.classList.add("btn-disabled");
+  }
+
+  fullName.addEventListener("input", function () {
+    updateNameUI();
+    updateSubmitState();
+  });
+
+  q2.addEventListener("change", function () {
+    updateSubmitState();
+  });
+
+  q3.addEventListener("change", function () {
+    updateSubmitState();
+  });
+
+  // if user changes radio (even though first is checked by default)
+  var radios = document.getElementsByName("q1");
+  for (var i = 0; i < radios.length; i++) {
+    radios[i].addEventListener("change", function () {
+      updateSubmitState();
+    });
+  }
+
+  form.addEventListener("submit", function (e) {
+    if (!isNameValid() || q2.value === "" || q3.value === "" || !isRadioChecked()) {
+      e.preventDefault();
+      updateNameUI();
+      updateSubmitState();
+    }
+  });
+
+  // initial
+  updateNameUI();
+  updateSubmitState();
+});
+
+
+
+
+
 /* =========================================
    SCORM Handeling
    ========================================= */
-
-
-
-
-
-
-
 
 
 
