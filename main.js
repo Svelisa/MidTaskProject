@@ -1,5 +1,5 @@
 /* =========================================
-   SCORM & Form Logic - גרסה תואמת חומר נלמד
+   SCORM & Form Logic
    ========================================= */
 
 // אובייקט SCORM של pipwerks
@@ -354,3 +354,4 @@ window.onunload = function () {
     scorm.quit();
   }
 };
+
