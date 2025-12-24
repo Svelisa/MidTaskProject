@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var q3 = document.getElementById("q3select");
   var submitBtn = document.getElementById("submitBtn");
   var ethicalCheck = document.getElementById("checkDefault");
+  var ethicsError = document.getElementById("ethicsError");
+
 
 // =======================
 // מנגנון חיפוש + הסתרת FORM
@@ -87,7 +89,14 @@ searchInput.addEventListener("keydown", function (e) {
   }
 });
 
+function setInteractionAt(index, id, type, response, result) {
+  if (!lmsConnected) return;
 
+  scorm.set("cmi.interactions." + index + ".id", id);
+  scorm.set("cmi.interactions." + index + ".type", type);
+  scorm.set("cmi.interactions." + index + ".student_response", String(response));
+  scorm.set("cmi.interactions." + index + ".result", result || "neutral");
+}
 
   // -----------------------
   // SCORM suspend_data helpers
@@ -105,12 +114,11 @@ searchInput.addEventListener("keydown", function (e) {
     }
   }
 
-  function saveSuspendObject(obj) {
-    if (!lmsConnected) return;
+function saveSuspendObject(obj) {
+  if (!lmsConnected) return;
+  scorm.set("cmi.suspend_data", JSON.stringify(obj));
+}
 
-    scorm.set("cmi.suspend_data", JSON.stringify(obj));
-    scorm.save();
-  }
 
   // -----------------------
   // פונקציות אימות (Validation)
@@ -152,14 +160,18 @@ searchInput.addEventListener("keydown", function (e) {
     return false;
   }
 
-  function checkFormValidity() {
-    var nameOk = isNameValid();
-    var q2Ok = (q2.value !== "");
-    var q3Ok = (q3.value !== "");
-    var radioOk = isRadioChecked();
+function checkFormValidity() {
+  var nameOk = isNameValid();
+  var q2Ok = (q2.value !== "");
+  var q3Ok = (q3.value !== "");
+  var radioOk = isRadioChecked();
+  var ethicsOk = ethicalCheck.checked; // חדש
 
-    return nameOk && q2Ok && q3Ok && radioOk;
-  }
+
+
+  return nameOk && q2Ok && q3Ok && radioOk && ethicsOk;
+}
+
 
   // -----------------------
   // UI: שגיאה/הצלחה לשם
@@ -184,6 +196,17 @@ searchInput.addEventListener("keydown", function (e) {
     }
   }
 
+  function updateEthicsUI() {
+  if (ethicalCheck.checked) {
+    if (ethicsError) ethicsError.classList.add("d-none");
+    ethicalCheck.classList.remove("is-invalid");
+  } else {
+    if (ethicsError) ethicsError.classList.remove("d-none");
+    ethicalCheck.classList.add("is-invalid");
+  }
+}
+
+
   function updateSubmitState() {
     var ready = checkFormValidity();
     submitBtn.disabled = !ready;
@@ -195,63 +218,41 @@ searchInput.addEventListener("keydown", function (e) {
   // -----------------------
   // תהליך נפרד: שמירת checkbox ל-LMS
   // -----------------------
-  function saveEthicsToLMS() {
-    if (!lmsConnected) return;
 
-    var data = getSuspendObject();
 
-    data.ethics = {
-      approved: ethicalCheck.checked,
-      time: new Date().toLocaleString()
-    };
-
-    saveSuspendObject(data);
-    console.log("Ethics saved:", data.ethics);
+  function getCheckedOccupationValue() {
+  var radios = document.getElementsByName("q1");
+  for (var i = 0; i < radios.length; i++) {
+    if (radios[i].checked) return radios[i].value;
   }
-
-  function restoreEthicsFromLMS() {
-    if (!lmsConnected) return;
-
-    var data = getSuspendObject();
-    if (data.ethics && typeof data.ethics.approved === "boolean") {
-      ethicalCheck.checked = data.ethics.approved;
-    }
-  }
+  return "";
+}
 
   // -----------------------
   // שמירת טופס ל-LMS (submit)
   // -----------------------
-  function getCheckedOccupationValue() {
-    var radios = document.getElementsByName("q1");
-    for (var i = 0; i < radios.length; i++) {
-      if (radios[i].checked) return radios[i].value;
-    }
-    return "";
-  }
+function saveToLMS() {
+  if (!lmsConnected) return;
 
-  function saveToLMS() {
-    if (!lmsConnected) return;
+  var data = getSuspendObject();
 
-    // כדי לא לדרוס ethics, נבנה על אובייקט קיים
-    var data = getSuspendObject();
+  data.form = {
+    participant_name: fullName.value.trim(),
+    occupation: getCheckedOccupationValue(),
+    experience: q2.value,
+    availability: q3.value,
+    ethics_approved: ethicalCheck.checked,
+    submission_time: new Date().toLocaleString()
+  };
 
-    data.form = {
-      participant_name: fullName.value.trim(),
-      occupation: getCheckedOccupationValue(),
-      experience: q2.value,
-      availability: q3.value,
-      submission_time: new Date().toLocaleString()
-    };
+  saveSuspendObject(data);
 
-    // שמירה ב-suspend_data
-    saveSuspendObject(data);
+  // רק set, בלי commit
+  scorm.set("cmi.core.lesson_status", "completed");
 
-    // סטטוס "completed" רק של הטופס
-    scorm.set("cmi.core.lesson_status", "completed");
-    scorm.save();
+  console.log("Prepared for save:", data.form);
+}
 
-    console.log("Form saved:", data.form);
-  }
 
   // -----------------------
   // אירועים (Events)
@@ -276,56 +277,75 @@ searchInput.addEventListener("keydown", function (e) {
     });
   }
 
-  ethicalCheck.addEventListener("change", function () {
-    saveEthicsToLMS(); // תהליך נפרד
-  });
+ethicalCheck.addEventListener("change", function () {
+  updateEthicsUI();
+  updateSubmitState();
+});
+
+
+
 
   // -----------------------
 // Bootstrap Modal handling
 // -----------------------
 var modalElement = document.getElementById("modal-submit");
-var submitModal = new bootstrap.Modal(modalElement);
-
+var submitModal = modalElement ? new bootstrap.Modal(modalElement) : null;
 var stateLoading = document.getElementById("state-loading");
 var stateSuccess = document.getElementById("state-success");
 
+
 function showLoadingState() {
+  if (!submitModal || !stateLoading || !stateSuccess) return;
   stateLoading.classList.remove("d-none");
   stateSuccess.classList.add("d-none");
   submitModal.show();
 }
 
 function showSuccessState() {
+  if (!submitModal || !stateLoading || !stateSuccess) return;
   stateLoading.classList.add("d-none");
   stateSuccess.classList.remove("d-none");
 }
-
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
   if (!checkFormValidity()) {
     updateNameUI();
+    updateEthicsUI();
     updateSubmitState();
     return;
   }
 
-  // 1) פתיחת מודאל + מצב טעינה
   showLoadingState();
 
-  // 2) סימולציה של שליחה (כמו LMS אמיתי)
   setTimeout(function () {
+
+    // 1) interactions
+    setInteractionAt(0, "ethics_approved", "true-false", ethicalCheck.checked ? "true" : "false", "neutral");
+    setInteractionAt(1, "full_name", "fill-in", fullName.value.trim(), "neutral");
+    setInteractionAt(2, "occupation", "choice", getCheckedOccupationValue(), "neutral");
+    setInteractionAt(3, "experience", "choice", q2.value, "neutral");
+    setInteractionAt(4, "availability", "choice", q3.value, "neutral");
+
+    // 2) suspend_data + lesson_status (בלי commit)
     saveToLMS();
 
-    // 3) מעבר למצב הצלחה
+    // 3) ✅ commit אחד לכל מה שנצבר
+    if (lmsConnected) scorm.save();
+
     showSuccessState();
-  }, 1200);
+  }, 300);
 });
 
+
+
+
   // מצב התחלתי
-  restoreEthicsFromLMS();
   updateNameUI();
+  updateEthicsUI();
   updateSubmitState();
+  
 });
 
 // ניתוק בטוח מה-LMS בסגירת חלון
