@@ -12,10 +12,10 @@
   <link rel="stylesheet" href="styles.css" />
 
   <!-- font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-    rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600;700;800&display=swap"
+      rel="stylesheet">
 </head>
 
 <body>
@@ -84,6 +84,8 @@
       </div>
     </section>
 
+
+    <!-- FORM Section -->
     <section id="form" class="py-5">
       <div class="container">
         <div class="row align-items-center">
@@ -165,6 +167,7 @@
                 <button id="submitBtn" type="submit" class="btn btn-brand btn-lg px-5 btn-disabled" disabled>
                   שליחת הטופס
                 </button>
+                <br> <span>לא ניתן לשלוח טופס ריק</span>
               </div>
             </form>
           </div>
@@ -186,6 +189,7 @@
 
         <div class="row g-4">
 
+          <!-- Card A -->
           <div class="col-md-6">
             <div class="card h-100 shadow-sm border-0 card-hover">
               <div class="row g-0 align-items-center">
@@ -202,7 +206,7 @@
             </div>
           </div>
 
-
+          <!-- Card B -->
           <div class="col-md-6">
             <div class="card h-100 shadow-sm border-0 card-hover">
               <div class="row g-0 align-items-center">
@@ -219,7 +223,7 @@
             </div>
           </div>
 
-
+          <!-- Card C -->
           <div class="col-md-6">
             <div class="card h-100 shadow-sm border-0 card-hover">
               <div class="row g-0 align-items-center">
@@ -237,7 +241,7 @@
             </div>
           </div>
 
-
+          <!-- Card D -->
           <div class="col-md-6">
             <div class="card h-100 shadow-sm border-0 card-hover">
               <div class="row g-0 align-items-center">
@@ -254,7 +258,7 @@
             </div>
           </div>
 
-
+          <!-- Card E -->
           <div class="col-md-6">
             <div class="card h-100 shadow-sm border-0 card-hover">
               <div class="row g-0 align-items-center">
@@ -271,7 +275,7 @@
             </div>
           </div>
 
-
+          <!-- Card F -->
           <div class="col-md-6">
             <div class="card h-100 shadow-sm border-0 card-hover">
               <div class="row g-0 align-items-center">
@@ -289,35 +293,37 @@
           </div>
 
 
-          <div class="row mt-4 justify-content-center">
-            <div class="col-md-6">
-              <div class="card h-100 shadow-sm border-0 card-hover bg-white">
-                <div class="row g-0 align-items-center">
-                  <div class="col-4 text-center p-3">
-                    <img src="assets/sync_15704636.svg" class="svg-icon" alt="עדכוני ידע">
-                  </div>
-                  <div class="col-8">
-                    <div class="card-body">
-                      <h5 class="card-title fw-bold">עדכוני ידע ושינויים</h5>
-                      <p class="card-text">מאגר עדכונים שוטפים, שאלות נפוצות וטפסים רלוונטיים.</p>
-                    </div>
+          <div class="col-12 col-md-6 mx-auto">
+            <div class="card h-100 shadow-sm border-0 card-hover bg-white">
+              <div class="row g-0 align-items-center">
+                <div class="col-4 text-center p-3">
+                  <img src="assets/sync_15704636.svg" class="svg-icon" alt="עדכוני ידע">
+                </div>
+                <div class="col-8">
+                  <div class="card-body">
+                    <h5 class="card-title fw-bold">עדכוני ידע ושינויים</h5>
+                    <p class="card-text">מאגר עדכונים שוטפים, שאלות נפוצות וטפסים רלוונטיים.</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <header class="mt-4">
-            <h5 class="h5 mb-1">אישור קוד אתי</h5>
-          </header>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkDefault">
-            <label class="form-check-label" for="checkDefault">
-              אני מאשר/ת ומקבל/ת על עצמי את עקרונות הסודיות, הרגישות והמקצועיות של הקוד האתי של "עדות 710".
-            </label>
+          <!-- אישור קוד אתי -->
+          <div class="col-12 mt-4">
+            <h5 class="h5 mb-2">אישור קוד אתי</h5>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="checkDefault">
+              <label class="form-check-label" for="checkDefault">
+                אני מאשר/ת ומקבל/ת על עצמי את עקרונות הסודיות, הרגישות והמקצועיות של הקוד האתי של "עדות 710".
+              </label>
+            </div>
           </div>
-        </div>
+
+        </div> <!-- /.row g-4 -->
+      </div>   <!-- /.container -->
     </section>
+
   </main>
 
   <!-- Footer -->
@@ -377,4 +383,3 @@
 </body>
 
 </html>
-
