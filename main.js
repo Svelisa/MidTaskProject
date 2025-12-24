@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // =======================
 var searchInput = document.getElementById("searchInput");
 var searchBtn = document.getElementById("searchBtn");
+var noResultsMsg = document.getElementById("noResultsMsg");
 
 var formSection = document.getElementById("form");
 var contentSection = document.getElementById("contentUnits");
@@ -40,15 +41,15 @@ var cards = contentSection.getElementsByClassName("card");
 function applySearch() {
   var q = searchInput.value.trim().toLowerCase();
 
-  // 1) להסתיר/להראות את סקשן הטופס לפי האם יש חיפוש
   if (q !== "") {
-    formSection.classList.add("d-none");      // מסתיר את הטופס
-    contentSection.classList.remove("d-none"); // מוודא שתוצאות מוצגות
+    formSection.classList.add("d-none");
+    contentSection.classList.remove("d-none");
   } else {
-    formSection.classList.remove("d-none");   // מחזיר את הטופס
+    formSection.classList.remove("d-none");
   }
 
-  // 2) סינון כרטיסים
+  var visibleCount = 0; // <-- חדש
+
   for (var i = 0; i < cards.length; i++) {
     var card = cards[i];
 
@@ -63,16 +64,26 @@ function applySearch() {
     var wrapper = card.closest('[class*="col-"]');
 
     if (wrapper) {
-      if (match) wrapper.classList.remove("d-none");
-      else wrapper.classList.add("d-none");
+      if (match) {
+        wrapper.classList.remove("d-none");
+        if (q !== "") visibleCount++; // סופרים רק כשיש חיפוש פעיל
+      } else {
+        wrapper.classList.add("d-none");
+      }
     }
   }
 
-  // 3) אם יש חיפוש – קופצים לתוצאות כדי שיופיעו מיד אחרי
+  // --- הודעת "אין תוצאות" ---
+  if (noResultsMsg) {
+    if (q !== "" && visibleCount === 0) noResultsMsg.classList.remove("d-none");
+    else noResultsMsg.classList.add("d-none");
+  }
+
   if (q !== "") {
     contentSection.scrollIntoView({ behavior: "smooth" });
   }
 }
+
 
 searchInput.addEventListener("input", function () {
   applySearch();
@@ -354,4 +365,3 @@ window.onunload = function () {
     scorm.quit();
   }
 };
-
